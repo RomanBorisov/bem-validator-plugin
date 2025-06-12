@@ -1,0 +1,17 @@
+<idea-plugin>
+    <id>ru.bem.bem-html-inspector</id>
+    <name>BEM HTML Inspector</name>
+    <vendor email="support@bem.ru" url="https://bem.info">BEM</vendor>
+    <description>Inspection for checking HTML markup for compliance with the BEM methodology.</description>
+    <version>1.0.0</version>
+    <idea-version since-build="251" until-build="259.*"/>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.lang</depends>
+    <depends>com.jetbrains.php</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <localInspection language="HTML" implementationClass="ru.bem.inspections.BemHtmlInspection"/>
+        <localInspection language="Blade" implementationClass="ru.bem.inspections.BemHtmlInspection"/>
+    </extensions>
+</idea-plugin> 

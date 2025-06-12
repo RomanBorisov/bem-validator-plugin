@@ -6,24 +6,10 @@ Inspection for checking HTML markup for compliance with the BEM methodology for 
 
 ## Features
 - Checks that an element with a class `block__element` is inside a parent with a class `block`.
+- Checks that a modifier class (`block--modifier` or `block__element--modifier`) is used together with its base class (`block` or `block__element`).
 - Supported files: `.html`, `.blade.php`.
-- Highlights the error and shows the message:
-  > Element 'block__element' is used outside of block 'block'.
+- Highlights the error and shows a message with details.
 
-## Example
-
-**Error:**
-```html
-<!-- Error: no parent with class 'menu' -->
-<div class="menu__item"></div>
-```
-
-**Correct:**
-```html
-<div class="menu">
-  <div class="menu__item"></div>
-</div>
-```
 
 ## Installation and Build
 
@@ -57,24 +43,41 @@ To run tests:
 ./gradlew test
 ```
 
-## Extension
-The architecture allows you to add new inspection rules via new classes.
+## Rules and Examples
 
-## Usage examples
+### 1. Element must be inside its block
+<details>
+<summary>Show examples</summary>
 
-**Blade:**
+**Error:**
+```html
+<!-- Error: no parent with class 'menu' -->
+<div class="menu__item"></div>
+```
+**Correct:**
 ```html
 <div class="menu">
   <div class="menu__item"></div>
 </div>
 ```
+</details>
 
-**HTML:**
+### 2. Modifier must be used together with block or element
+<details>
+<summary>Show examples</summary>
+
+**Error:**
 ```html
-<div class="header">
-  <span class="header__logo"></span>
-</div>
+<!-- Error: modifier without base class -->
+<div class="menu__item--active"></div>
+<div class="menu--active"></div>
 ```
+**Correct:**
+```html
+<div class="menu__item menu__item--active"></div>
+<div class="menu menu--active"></div>
+```
+</details>
 
 ## License
 MIT 

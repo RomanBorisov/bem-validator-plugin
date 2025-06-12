@@ -29,6 +29,7 @@ class BemHtmlInspection : LocalInspectionTool() {
             override fun visitElement(element: com.intellij.psi.PsiElement) {
                 if (element is XmlTag) {
                     checkBemElementHasBlockParent(element, holder)
+                    checkModifierHasBaseClass(element, holder)
                 }
             }
         }
@@ -45,6 +46,26 @@ class BemHtmlInspection : LocalInspectionTool() {
                 holder.registerProblem(
                     classAttr,
                     "Element '$cls' is used outside of block '$block'."
+                )
+            }
+        }
+    }
+
+    private fun checkModifierHasBaseClass(element: XmlTag, holder: ProblemsHolder) {
+        val classAttr = element.getAttribute("class") ?: return
+        val classValue = classAttr.value ?: return
+        val modifierRegex = Regex("([a-zA-Z0-9_-]+)(__(?:[a-zA-Z0-9_-]+))?--([a-zA-Z0-9_-]+)")
+        val classes = classValue.split(" ")
+        for (cls in classes) {
+            val match = modifierRegex.matchEntire(cls) ?: continue
+            val block = match.groupValues[1]
+            val elementPart = match.groupValues[2] // может быть пустым
+            val baseClass = if (elementPart.isNotEmpty()) block + elementPart else block
+            if (baseClass.isEmpty()) continue
+            if (baseClass !in classes) {
+                holder.registerProblem(
+                    classAttr,
+                    "Modifier '$cls' is used without its base class '$baseClass'."
                 )
             }
         }

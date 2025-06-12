@@ -30,6 +30,7 @@ class BemHtmlInspection : LocalInspectionTool() {
                 if (element is XmlTag) {
                     checkBemElementHasBlockParent(element, holder)
                     checkModifierHasBaseClass(element, holder)
+                    checkNoElementOrModifierWithoutBlock(element, holder)
                 }
             }
         }
@@ -81,5 +82,19 @@ class BemHtmlInspection : LocalInspectionTool() {
             parent = PsiTreeUtil.getParentOfType(parent, XmlTag::class.java)
         }
         return false
+    }
+
+    private fun checkNoElementOrModifierWithoutBlock(element: XmlTag, holder: ProblemsHolder) {
+        val classAttr = element.getAttribute("class") ?: return
+        val classValue = classAttr.value ?: return
+        val classes = classValue.split(" ")
+        for (cls in classes) {
+            if (cls.startsWith("__") || cls.startsWith("--")) {
+                holder.registerProblem(
+                    classAttr,
+                    "Class '$cls' starts with a separator without a block name."
+                )
+            }
+        }
     }
 } 

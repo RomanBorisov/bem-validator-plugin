@@ -71,7 +71,7 @@ class BemHtmlInspection : LocalInspectionTool() {
         }
     }
 
-    private fun  (tag: XmlTag, block: String): Boolean {
+    private fun hasBlockParent (tag: XmlTag, block: String): Boolean {
         var parent = PsiTreeUtil.getParentOfType(tag, XmlTag::class.java)
         while (parent != null) {
             val parentClass = parent.getAttribute("class")?.value ?: ""

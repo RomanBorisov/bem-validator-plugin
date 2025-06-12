@@ -79,5 +79,22 @@ To run tests:
 ```
 </details>
 
+### 3. No element or modifier without block
+<details>
+<summary>Show examples</summary>
+
+**Error:**
+```html
+<!-- Error: class starts with separator without block name -->
+<div class="__item"></div>
+<div class="--active"></div>
+```
+**Correct:**
+```html
+<div class="menu__item"></div>
+<div class="menu--active"></div>
+```
+</details>
+
 ## License
 MIT 

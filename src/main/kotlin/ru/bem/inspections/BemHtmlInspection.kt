@@ -28,19 +28,29 @@ class BemHtmlInspection : LocalInspectionTool() {
         return object : PsiElementVisitor() {
             override fun visitElement(element: com.intellij.psi.PsiElement) {
                 if (element is XmlTag) {
-                    val classAttr = element.getAttribute("class")
-                    if (classAttr != null) {
-                        holder.registerProblem(
-                            classAttr,
-                            "Test error: inspection is connected!"
-                        )
-                    }
+                    checkBemElementHasBlockParent(element, holder)
                 }
             }
         }
     }
 
-    private fun hasBlockParent(tag: XmlTag, block: String): Boolean {
+    private fun checkBemElementHasBlockParent(element: XmlTag, holder: ProblemsHolder) {
+        val classAttr = element.getAttribute("class")
+        val classValue = classAttr?.value ?: return
+        val bemElementRegex = Regex("([a-zA-Z0-9_-]+)__([a-zA-Z0-9_-]+)")
+        for (cls in classValue.split(" ")) {
+            val match = bemElementRegex.matchEntire(cls) ?: continue
+            val block = match.groupValues[1]
+            if (!hasBlockParent(element, block)) {
+                holder.registerProblem(
+                    classAttr,
+                    "Element '$cls' is used outside of block '$block'."
+                )
+            }
+        }
+    }
+
+    private fun  (tag: XmlTag, block: String): Boolean {
         var parent = PsiTreeUtil.getParentOfType(tag, XmlTag::class.java)
         while (parent != null) {
             val parentClass = parent.getAttribute("class")?.value ?: ""

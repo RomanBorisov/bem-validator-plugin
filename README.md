@@ -7,6 +7,7 @@ Inspection for checking HTML markup for compliance with the BEM methodology for 
 ## Features
 - Checks that an element with a class `block__element` is inside a parent with a class `block`.
 - Checks that a modifier class (`block--modifier` or `block__element--modifier`) is used together with its base class (`block` or `block__element`).
+- Checks that block names follow BEM naming conventions (lowercase, only letters, numbers and hyphens).
 - Supported files: `.html`, `.blade.php`.
 - Highlights the error and shows a message with details.
 
@@ -113,5 +114,25 @@ To run tests:
 ```
 </details>
 
+### 5. Block naming conventions
+<details>
+<summary>Show examples</summary>
+
+**Error:**
+```html
+<!-- Error: incorrect block naming -->
+<div class="Header"></div>
+<div class="header_block"></div>
+<div class="headerBlock"></div>
+<div class="HEADER"></div>
+```
+**Correct:**
+```html
+<div class="header"></div>
+<div class="header-block"></div>
+<div class="header-1"></div>
+```
+</details>
+
 ## License
-MIT 
+MIT

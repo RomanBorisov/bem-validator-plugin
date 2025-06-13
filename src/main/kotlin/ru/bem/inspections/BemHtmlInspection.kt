@@ -32,6 +32,7 @@ class BemHtmlInspection : LocalInspectionTool() {
                     checkModifierHasBaseClass(element, holder)
                     checkNoElementOrModifierWithoutBlock(element, holder)
                     checkNoDoubleSeparators(element, holder)
+                    checkBlockNaming(element, holder)
                 }
             }
         }
@@ -109,6 +110,28 @@ class BemHtmlInspection : LocalInspectionTool() {
                     classAttr,
                     "Class '$cls' contains double separators."
                 )
+            }
+        }
+    }
+
+    private fun checkBlockNaming(element: XmlTag, holder: ProblemsHolder) {
+        val classAttr = element.getAttribute("class") ?: return
+        val classValue = classAttr.value ?: return
+        val classes = classValue.split(" ")
+        
+        // Регулярное выражение для проверки имени блока
+        // Разрешает только строчные буквы, цифры и дефисы
+        val blockNameRegex = Regex("^[a-z0-9-]+$")
+        
+        for (cls in classes) {
+            // Проверяем только имена блоков (без элементов и модификаторов)
+            if (!cls.contains("__") && !cls.contains("--")) {
+                if (!blockNameRegex.matches(cls)) {
+                    holder.registerProblem(
+                        classAttr,
+                        "Block name '$cls' should be lowercase and use only letters, numbers and hyphens."
+                    )
+                }
             }
         }
     }

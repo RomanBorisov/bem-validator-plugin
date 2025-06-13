@@ -33,6 +33,7 @@ class BemHtmlInspection : LocalInspectionTool() {
                     checkNoElementOrModifierWithoutBlock(element, holder)
                     checkNoDoubleSeparators(element, holder)
                     checkBlockNaming(element, holder)
+                    checkElementNestingDepth(element, holder)
                 }
             }
         }
@@ -130,6 +131,24 @@ class BemHtmlInspection : LocalInspectionTool() {
                     holder.registerProblem(
                         classAttr,
                         "Block name '$cls' should be lowercase and use only letters, numbers and hyphens."
+                    )
+                }
+            }
+        }
+    }
+
+    private fun checkElementNestingDepth(element: XmlTag, holder: ProblemsHolder) {
+        val classAttr = element.getAttribute("class") ?: return
+        val classValue = classAttr.value ?: return
+        val classes = classValue.split(" ")
+        
+        for (cls in classes) {
+            if (cls.contains("__")) {
+                val parts = cls.split("__")
+                if (parts.size > 2) {
+                    holder.registerProblem(
+                        classAttr,
+                        "Too deep element nesting in class '$cls'. Maximum nesting level is 1."
                     )
                 }
             }

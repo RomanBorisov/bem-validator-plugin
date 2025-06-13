@@ -8,6 +8,7 @@ Inspection for checking HTML markup for compliance with the BEM methodology for 
 - Checks that an element with a class `block__element` is inside a parent with a class `block`.
 - Checks that a modifier class (`block--modifier` or `block__element--modifier`) is used together with its base class (`block` or `block__element`).
 - Checks that block names follow BEM naming conventions (lowercase, only letters, numbers and hyphens).
+- Checks that element nesting depth follows BEM methodology (maximum one level).
 - Supported files: `.html`, `.blade.php`.
 - Highlights the error and shows a message with details.
 
@@ -131,6 +132,23 @@ To run tests:
 <div class="header"></div>
 <div class="header-block"></div>
 <div class="header-1"></div>
+```
+</details>
+
+### 6. Element nesting depth
+<details>
+<summary>Show examples</summary>
+
+**Error:**
+```html
+<!-- Error: too deep element nesting -->
+<div class="block__element1__element2"></div>
+<div class="menu__item__link__icon"></div>
+```
+**Correct:**
+```html
+<div class="block__element1"></div>
+<div class="menu__item"></div>
 ```
 </details>
 

@@ -31,6 +31,7 @@ class BemHtmlInspection : LocalInspectionTool() {
                     checkBemElementHasBlockParent(element, holder)
                     checkModifierHasBaseClass(element, holder)
                     checkNoElementOrModifierWithoutBlock(element, holder)
+                    checkNoDoubleSeparators(element, holder)
                 }
             }
         }
@@ -93,6 +94,20 @@ class BemHtmlInspection : LocalInspectionTool() {
                 holder.registerProblem(
                     classAttr,
                     "Class '$cls' starts with a separator without a block name."
+                )
+            }
+        }
+    }
+
+    private fun checkNoDoubleSeparators(element: XmlTag, holder: ProblemsHolder) {
+        val classAttr = element.getAttribute("class") ?: return
+        val classValue = classAttr.value ?: return
+        val classes = classValue.split(" ")
+        for (cls in classes) {
+            if (cls.contains("___") || cls.contains("---")) {
+                holder.registerProblem(
+                    classAttr,
+                    "Class '$cls' contains double separators."
                 )
             }
         }

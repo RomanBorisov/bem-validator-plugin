@@ -96,5 +96,22 @@ To run tests:
 ```
 </details>
 
+### 4. No double separators
+<details>
+<summary>Show examples</summary>
+
+**Error:**
+```html
+<!-- Error: class contains double separators -->
+<div class="menu___item"></div>
+<div class="menu----active"></div>
+```
+**Correct:**
+```html
+<div class="menu__item"></div>
+<div class="menu--active"></div>
+```
+</details>
+
 ## License
 MIT 

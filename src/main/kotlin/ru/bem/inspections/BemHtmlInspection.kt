@@ -40,11 +40,15 @@ class BemHtmlInspection : LocalInspectionTool() {
         }
     }
 
+    private fun getClasses(classValue: String): List<String> {
+        return classValue.trim().split(Regex("\\s+")).filter { it.isNotEmpty() }
+    }
+
     private fun checkBemElementHasBlockParent(element: XmlTag, holder: ProblemsHolder) {
         val classAttr = element.getAttribute("class")
         val classValue = classAttr?.value ?: return
         val bemElementRegex = Regex("([a-zA-Z0-9_-]+)__([a-zA-Z0-9_-]+)")
-        for (cls in classValue.split(" ")) {
+        for (cls in getClasses(classValue)) {
             val match = bemElementRegex.matchEntire(cls) ?: continue
             val block = match.groupValues[1]
             if (!hasBlockParent(element, block)) {
@@ -60,11 +64,11 @@ class BemHtmlInspection : LocalInspectionTool() {
         val classAttr = element.getAttribute("class") ?: return
         val classValue = classAttr.value ?: return
         val modifierRegex = Regex("([a-zA-Z0-9_-]+)(__(?:[a-zA-Z0-9_-]+))?--([a-zA-Z0-9_-]+)")
-        val classes = classValue.split(" ")
+        val classes = getClasses(classValue)
         for (cls in classes) {
             val match = modifierRegex.matchEntire(cls) ?: continue
             val block = match.groupValues[1]
-            val elementPart = match.groupValues[2] // может быть пустым
+            val elementPart = match.groupValues[2]
             val baseClass = if (elementPart.isNotEmpty()) block + elementPart else block
             if (baseClass.isEmpty()) continue
             if (baseClass !in classes) {
@@ -76,11 +80,11 @@ class BemHtmlInspection : LocalInspectionTool() {
         }
     }
 
-    private fun hasBlockParent (tag: XmlTag, block: String): Boolean {
+    private fun hasBlockParent(tag: XmlTag, block: String): Boolean {
         var parent = PsiTreeUtil.getParentOfType(tag, XmlTag::class.java)
         while (parent != null) {
             val parentClass = parent.getAttribute("class")?.value ?: ""
-            if (parentClass.split(" ").any { it == block }) {
+            if (getClasses(parentClass).any { it == block }) {
                 return true
             }
             parent = PsiTreeUtil.getParentOfType(parent, XmlTag::class.java)
@@ -91,8 +95,7 @@ class BemHtmlInspection : LocalInspectionTool() {
     private fun checkNoElementOrModifierWithoutBlock(element: XmlTag, holder: ProblemsHolder) {
         val classAttr = element.getAttribute("class") ?: return
         val classValue = classAttr.value ?: return
-        val classes = classValue.split(" ")
-        for (cls in classes) {
+        for (cls in getClasses(classValue)) {
             if (cls.startsWith("__") || cls.startsWith("--")) {
                 holder.registerProblem(
                     classAttr,
@@ -105,8 +108,7 @@ class BemHtmlInspection : LocalInspectionTool() {
     private fun checkNoDoubleSeparators(element: XmlTag, holder: ProblemsHolder) {
         val classAttr = element.getAttribute("class") ?: return
         val classValue = classAttr.value ?: return
-        val classes = classValue.split(" ")
-        for (cls in classes) {
+        for (cls in getClasses(classValue)) {
             if (cls.contains("___") || cls.contains("---")) {
                 holder.registerProblem(
                     classAttr,
@@ -119,14 +121,9 @@ class BemHtmlInspection : LocalInspectionTool() {
     private fun checkBlockNaming(element: XmlTag, holder: ProblemsHolder) {
         val classAttr = element.getAttribute("class") ?: return
         val classValue = classAttr.value ?: return
-        val classes = classValue.split(" ")
-        
-        // Регулярное выражение для проверки имени блока
-        // Разрешает только строчные буквы, цифры и дефисы
         val blockNameRegex = Regex("^[a-z0-9-]+$")
         
-        for (cls in classes) {
-            // Проверяем только имена блоков (без элементов и модификаторов)
+        for (cls in getClasses(classValue)) {
             if (!cls.contains("__") && !cls.contains("--")) {
                 if (!blockNameRegex.matches(cls)) {
                     holder.registerProblem(
@@ -141,9 +138,8 @@ class BemHtmlInspection : LocalInspectionTool() {
     private fun checkElementNestingDepth(element: XmlTag, holder: ProblemsHolder) {
         val classAttr = element.getAttribute("class") ?: return
         val classValue = classAttr.value ?: return
-        val classes = classValue.split(" ")
         
-        for (cls in classes) {
+        for (cls in getClasses(classValue)) {
             if (cls.contains("__")) {
                 val parts = cls.split("__")
                 if (parts.size > 2) {
@@ -159,19 +155,14 @@ class BemHtmlInspection : LocalInspectionTool() {
     private fun checkModifierWithoutElement(element: XmlTag, holder: ProblemsHolder) {
         val classAttr = element.getAttribute("class") ?: return
         val classValue = classAttr.value ?: return
-        val classes = classValue.split(" ")
-        
-        // Find all modifiers in the class list
+        val classes = getClasses(classValue)
         val modifiers = classes.filter { it.contains("--") }
         
         for (modifier in modifiers) {
-            // Check if this is a modifier for an element (contains both __ and --)
             if (!modifier.contains("__")) {
-                // This is a block modifier, which is allowed
                 continue
             }
             
-            // For element modifiers, check if the element class exists
             val elementClass = modifier.substring(0, modifier.lastIndexOf("--"))
             if (!classes.contains(elementClass)) {
                 holder.registerProblem(

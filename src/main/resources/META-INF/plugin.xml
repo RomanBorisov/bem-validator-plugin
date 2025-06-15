@@ -11,7 +11,7 @@
     <depends>com.jetbrains.php</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <localInspection language="HTML" implementationClass="ru.bem.inspections.BemHtmlInspection"/>
-        <localInspection language="Blade" implementationClass="ru.bem.inspections.BemHtmlInspection"/>
+        <localInspection language="HTML" implementationClass="ru.bem.inspections.BemHtmlInspection" enabledByDefault="true" level="WARNING"/>
+        <localInspection language="Blade" implementationClass="ru.bem.inspections.BemHtmlInspection" enabledByDefault="true" level="WARNING"/>
     </extensions>
 </idea-plugin> 

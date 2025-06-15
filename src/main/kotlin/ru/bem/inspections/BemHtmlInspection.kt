@@ -34,6 +34,7 @@ class BemHtmlInspection : LocalInspectionTool() {
                     checkNoDoubleSeparators(element, holder)
                     checkBlockNaming(element, holder)
                     checkElementNestingDepth(element, holder)
+                    checkModifierWithoutElement(element, holder)
                 }
             }
         }
@@ -151,6 +152,32 @@ class BemHtmlInspection : LocalInspectionTool() {
                         "Too deep element nesting in class '$cls'. Maximum nesting level is 1."
                     )
                 }
+            }
+        }
+    }
+
+    private fun checkModifierWithoutElement(element: XmlTag, holder: ProblemsHolder) {
+        val classAttr = element.getAttribute("class") ?: return
+        val classValue = classAttr.value ?: return
+        val classes = classValue.split(" ")
+        
+        // Find all modifiers in the class list
+        val modifiers = classes.filter { it.contains("--") }
+        
+        for (modifier in modifiers) {
+            // Check if this is a modifier for an element (contains both __ and --)
+            if (!modifier.contains("__")) {
+                // This is a block modifier, which is allowed
+                continue
+            }
+            
+            // For element modifiers, check if the element class exists
+            val elementClass = modifier.substring(0, modifier.lastIndexOf("--"))
+            if (!classes.contains(elementClass)) {
+                holder.registerProblem(
+                    classAttr,
+                    "Modifier '$modifier' is used without its base element class '$elementClass'"
+                )
             }
         }
     }

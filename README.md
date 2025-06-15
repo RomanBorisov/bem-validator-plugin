@@ -152,5 +152,20 @@ To run tests:
 ```
 </details>
 
+### 7. Modifier without element class
+<details>
+<summary>Show examples</summary>
+
+**Error:**
+```html
+<!-- Error: element modifier used without its base class -->
+<div class="block__element--modifier"></div>
+```
+**Correct:**
+```html
+<div class="block__element block__element--modifier"></div>
+```
+</details>
+
 ## License
 MIT

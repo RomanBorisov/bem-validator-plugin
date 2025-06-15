@@ -2,7 +2,53 @@
     <id>ru.bem.bem-html-inspector</id>
     <name>BEM HTML Inspector</name>
     <vendor email="support@bem.ru" url="https://bem.info">BEM</vendor>
-    <description>Inspection for checking HTML markup for compliance with the BEM methodology.</description>
+    <description><![CDATA[
+        <p>Inspection for checking HTML markup for compliance with the BEM methodology.</p>
+        
+        <h3>Features:</h3>
+        <ul>
+            <li>Validates BEM class naming conventions</li>
+            <li>Checks element nesting and parent-child relationships</li>
+            <li>Validates modifier usage</li>
+            <li>Supports HTML and Blade templates</li>
+            <li>Real-time validation as you type</li>
+        </ul>
+
+        <h3>Key Benefits:</h3>
+        <ul>
+            <li>Maintain consistent BEM naming across your project</li>
+            <li>Prevent common BEM mistakes</li>
+            <li>Improve code quality and maintainability</li>
+            <li>Speed up development with instant feedback</li>
+        </ul>
+
+        <h3>Supported Rules:</h3>
+        <ul>
+            <li>Element must be inside its block</li>
+            <li>Modifier must be used with base class</li>
+            <li>No element or modifier without block</li>
+            <li>No double separators</li>
+            <li>Block naming conventions</li>
+            <li>Element nesting depth</li>
+            <li>Modifier without element class</li>
+        </ul>
+
+        <h3>Examples:</h3>
+        <p><b>Correct usage:</b></p>
+        <pre>
+&lt;div class="block"&gt;
+    &lt;div class="block__element"&gt;&lt;/div&gt;
+    &lt;div class="block__element block__element--modifier"&gt;&lt;/div&gt;
+&lt;/div&gt;</pre>
+
+        <p><b>Incorrect usage:</b></p>
+        <pre>
+&lt;div class="block__element"&gt;&lt;/div&gt;
+&lt;div class="block__element--modifier"&gt;&lt;/div&gt;
+&lt;div class="block__element1__element2"&gt;&lt;/div&gt;</pre>
+
+        <p>For more information and examples, visit our <a href="https://github.com/RomanBorisov/bem-validator-plugin">GitHub repository</a>.</p>
+    ]]></description>
     <version>1.0.0</version>
     <idea-version since-build="251" until-build="259.*"/>
 
@@ -14,4 +60,10 @@
         <localInspection language="HTML" implementationClass="ru.bem.inspections.BemHtmlInspection" enabledByDefault="true" level="WARNING"/>
         <localInspection language="Blade" implementationClass="ru.bem.inspections.BemHtmlInspection" enabledByDefault="true" level="WARNING"/>
     </extensions>
+
+    <icons>
+        <icon src="/icons/bem.svg" size="16"/>
+        <icon src="/icons/bem.svg" size="32"/>
+        <icon src="/icons/bem.svg" size="48"/>
+    </icons>
 </idea-plugin> 

@@ -1,69 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <idea-plugin>
-    <id>ru.bem.bem-html-inspector</id>
-    <name>BEM HTML Inspector</name>
-    <vendor email="support@bem.ru" url="https://bem.info">BEM</vendor>
+    <id>com.roman.bem.plugin</id>
+    <name>BEM Plugin</name>
+    <vendor email="borisovroman2016@gmail.com" url="https://github.com/RomanBorisov/bem-validator-plugin">Roman Borisov</vendor>
     <description><![CDATA[
-        <p>Inspection for checking HTML markup for compliance with the BEM methodology.</p>
-        
-        <h3>Features:</h3>
+        BEM (Block Element Modifier) methodology inspection plugin for HTML files.
+        <br>
+        <br>
+        This plugin provides inspections for BEM methodology:
         <ul>
-            <li>Validates BEM class naming conventions</li>
-            <li>Checks element nesting and parent-child relationships</li>
-            <li>Validates modifier usage</li>
-            <li>Supports HTML and Blade templates</li>
-            <li>Real-time validation as you type</li>
+            <li>Block-Element Relationship: Ensures elements are properly nested within their parent blocks</li>
+            <li>Modifier Validation: Validates that modifiers are used correctly with their base classes</li>
+            <li>Naming Conventions: Enforces BEM naming conventions for blocks, elements, and modifiers</li>
+            <li>Nesting Depth: Checks that BEM elements are not nested too deeply</li>
         </ul>
-
-        <h3>Key Benefits:</h3>
-        <ul>
-            <li>Maintain consistent BEM naming across your project</li>
-            <li>Prevent common BEM mistakes</li>
-            <li>Improve code quality and maintainability</li>
-            <li>Speed up development with instant feedback</li>
-        </ul>
-
-        <h3>Supported Rules:</h3>
-        <ul>
-            <li>Element must be inside its block</li>
-            <li>Modifier must be used with base class</li>
-            <li>No element or modifier without block</li>
-            <li>No double separators</li>
-            <li>Block naming conventions</li>
-            <li>Element nesting depth</li>
-            <li>Modifier without element class</li>
-        </ul>
-
-        <h3>Examples:</h3>
-        <p><b>Correct usage:</b></p>
+        <br>
+        <b>Examples:</b>
+        <br>
+        <br>
+        <b>Correct usage:</b>
         <pre>
 &lt;div class="block"&gt;
-    &lt;div class="block__element"&gt;&lt;/div&gt;
-    &lt;div class="block__element block__element--modifier"&gt;&lt;/div&gt;
+    &lt;div class="block__element"&gt;
+        &lt;div class="block__element--modifier"&gt;&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;</pre>
-
-        <p><b>Incorrect usage:</b></p>
+        <br>
+        <b>Incorrect usage:</b>
         <pre>
-&lt;div class="block__element"&gt;&lt;/div&gt;
-&lt;div class="block__element--modifier"&gt;&lt;/div&gt;
-&lt;div class="block__element1__element2"&gt;&lt;/div&gt;</pre>
-
-        <p>For more information and examples, visit our <a href="https://github.com/RomanBorisov/bem-validator-plugin">GitHub repository</a>.</p>
+&lt;div class="block__element"&gt;
+    &lt;div class="block__element__nested"&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="block--modifier"&gt;&lt;/div&gt;
+&lt;div class="BlockName"&gt;&lt;/div&gt;</pre>
     ]]></description>
-    <version>1.0.0</version>
-    <idea-version since-build="251" until-build="259.*"/>
 
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
-    <depends>com.jetbrains.php</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <localInspection language="HTML" implementationClass="ru.bem.inspections.BemHtmlInspection" enabledByDefault="true" level="WARNING"/>
-        <localInspection language="Blade" implementationClass="ru.bem.inspections.BemHtmlInspection" enabledByDefault="true" level="WARNING"/>
-    </extensions>
+        <localInspection
+                language="HTML"
+                displayName="BEM Element Block"
+                groupName="BEM"
+                enabledByDefault="true"
+                level="WARNING"
+                implementationClass="com.roman.bem.inspections.BemElementBlockInspection"
+                descriptionUrl="inspectionDescriptions/BemElementBlockInspection.html"/>
 
-    <icons>
-        <icon src="/icons/bem.svg" size="16"/>
-        <icon src="/icons/bem.svg" size="32"/>
-        <icon src="/icons/bem.svg" size="48"/>
-    </icons>
-</idea-plugin> 
+        <localInspection
+                language="HTML"
+                displayName="BEM Modifier"
+                groupName="BEM"
+                enabledByDefault="true"
+                level="WARNING"
+                implementationClass="com.roman.bem.inspections.BemModifierInspection"
+                descriptionUrl="inspectionDescriptions/BemModifierInspection.html"/>
+
+        <localInspection
+                language="HTML"
+                displayName="BEM Naming"
+                groupName="BEM"
+                enabledByDefault="true"
+                level="WARNING"
+                implementationClass="com.roman.bem.inspections.BemNamingInspection"
+                descriptionUrl="inspectionDescriptions/BemNamingInspection.html"/>
+
+        <localInspection
+                language="HTML"
+                displayName="BEM Nesting"
+                groupName="BEM"
+                enabledByDefault="true"
+                level="WARNING"
+                implementationClass="com.roman.bem.inspections.BemNestingInspection"
+                descriptionUrl="inspectionDescriptions/BemNestingInspection.html"/>
+    </extensions>
+</idea-plugin>

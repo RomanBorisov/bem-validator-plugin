@@ -1,0 +1,17 @@
+<html>
+<body>
+<p>Checks if BEM elements are properly nested within their parent blocks.</p>
+
+<p><b>Correct usage:</b></p>
+<pre>
+&lt;div class="block"&gt;
+    &lt;div class="block__element"&gt;&lt;/div&gt;
+&lt;/div&gt;</pre>
+
+<p><b>Incorrect usage:</b></p>
+<pre>
+&lt;div class="block__element"&gt;
+    &lt;div class="block__element__nested"&gt;&lt;/div&gt;
+&lt;/div&gt;</pre>
+</body>
+</html> 

@@ -1,0 +1,47 @@
+Validates that BEM modifier classes are used together with their base block or element classes.
+
+<html>
+<body>
+<!-- Provided by BEM Plugin -->
+<p>
+    Ensures that modifier classes (--modifier) are always used with their base classes (block or block__element) in the same HTML element.
+</p>
+
+<h3>Rules</h3>
+<ul>
+    <li>Block modifier needs its block class</li>
+    <li>Element modifier needs its element class</li>
+    <li>Both classes must be in the same element</li>
+</ul>
+
+<h3>Examples</h3>
+<pre><code>
+<!-- Valid -->
+<span style="color: #008000">✓</span> &lt;div class="button button--primary"&gt;
+    Primary button
+&lt;/div&gt;
+
+<!-- Element with modifier -->
+<span style="color: #008000">✓</span> &lt;div class="menu menu__item menu__item--active"&gt;
+    Active menu item
+&lt;/div&gt;
+
+<!-- Multiple modifiers -->
+<span style="color: #008000">✓</span> &lt;div class="form__input form__input--large form__input--disabled"&gt;
+    Large disabled input
+&lt;/div&gt;
+
+<!-- Invalid -->
+<span style="color: #CC0000">✗</span> &lt;div class="button--primary"&gt;         <!-- Missing button -->
+<span style="color: #CC0000">✗</span> &lt;div class="menu__item--active"&gt;     <!-- Missing menu__item -->
+<span style="color: #CC0000">✗</span> &lt;div class="button input--large"&gt;    <!-- Wrong base -->
+</code></pre>
+
+<p><em>
+    Note: This inspection helps maintain the proper relationship between modifiers and their base classes, 
+    ensuring that your BEM classes correctly represent the component's state or variation.
+</em></p>
+
+<p><em>Provided by BEM Plugin</em></p>
+</body>
+</html> 

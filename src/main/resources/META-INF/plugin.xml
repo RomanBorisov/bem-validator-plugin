@@ -2,6 +2,7 @@
 <idea-plugin>
     <id>com.roman.bem.plugin</id>
     <name>BEM Plugin</name>
+    <version>0.1.0</version>
     <vendor email="borisovroman2016@gmail.com" url="https://github.com/RomanBorisov/bem-validator-plugin">Roman Borisov</vendor>
     <description><![CDATA[
         BEM (Block Element Modifier) methodology inspection plugin for HTML files.
@@ -42,37 +43,41 @@
         <localInspection
                 language="HTML"
                 displayName="BEM Element Block"
+                groupPath="BEM"
                 groupName="BEM"
                 enabledByDefault="true"
                 level="WARNING"
-                implementationClass="com.roman.bem.inspections.BemElementBlockInspection"
-                descriptionUrl="inspectionDescriptions/BemElementBlockInspection.html"/>
+                shortName="BemElementBlockInspection"
+                implementationClass="com.roman.bem.inspections.BemElementBlockInspection"/>
 
         <localInspection
                 language="HTML"
                 displayName="BEM Modifier"
+                groupPath="BEM"
                 groupName="BEM"
                 enabledByDefault="true"
                 level="WARNING"
-                implementationClass="com.roman.bem.inspections.BemModifierInspection"
-                descriptionUrl="inspectionDescriptions/BemModifierInspection.html"/>
+                shortName="BemModifierInspection"
+                implementationClass="com.roman.bem.inspections.BemModifierInspection"/>
 
         <localInspection
                 language="HTML"
                 displayName="BEM Naming"
+                groupPath="BEM"
                 groupName="BEM"
                 enabledByDefault="true"
                 level="WARNING"
-                implementationClass="com.roman.bem.inspections.BemNamingInspection"
-                descriptionUrl="inspectionDescriptions/BemNamingInspection.html"/>
+                shortName="BemNamingInspection"
+                implementationClass="com.roman.bem.inspections.BemNamingInspection"/>
 
         <localInspection
                 language="HTML"
                 displayName="BEM Nesting"
+                groupPath="BEM"
                 groupName="BEM"
                 enabledByDefault="true"
                 level="WARNING"
-                implementationClass="com.roman.bem.inspections.BemNestingInspection"
-                descriptionUrl="inspectionDescriptions/BemNestingInspection.html"/>
+                shortName="BemNestingInspection"
+                implementationClass="com.roman.bem.inspections.BemNestingInspection"/>
     </extensions>
 </idea-plugin>

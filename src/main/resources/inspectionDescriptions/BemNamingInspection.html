@@ -1,0 +1,32 @@
+Validates that class names follow BEM (Block Element Modifier) naming conventions.
+<html>
+<body>
+<p>
+    Ensures CSS class names follow BEM methodology naming conventions for better maintainability and reusability.
+</p>
+
+<h3>Rules</h3>
+<ul>
+    <li><strong>Characters:</strong> lowercase letters, numbers, hyphens, underscores</li>
+    <li><strong>Element:</strong> two underscores (<code>block__element</code>)</li>
+    <li><strong>Modifier:</strong> two hyphens (<code>block--modifier</code>)</li>
+</ul>
+
+<h3>Examples</h3>
+<pre><code>
+<!-- Valid -->
+<span style="color: #008000">✓</span> header
+<span style="color: #008000">✓</span> menu__item
+<span style="color: #008000">✓</span> button--primary
+<span style="color: #008000">✓</span> form__input--disabled
+
+<!-- Invalid -->
+<span style="color: #CC0000">✗</span> Header              <!-- No uppercase -->
+<span style="color: #CC0000">✗</span> menu___item         <!-- No triple underscore -->
+<span style="color: #CC0000">✗</span> form__input__label  <!-- One __ only -->
+<span style="color: #CC0000">✗</span> block--mod1--mod2   <!-- One -- only -->
+</code></pre>
+
+<p><em>Provided by BEM Plugin</em></p>
+</body>
+</html> 

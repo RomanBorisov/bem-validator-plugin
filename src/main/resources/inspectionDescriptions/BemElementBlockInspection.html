@@ -1,1 +1,37 @@
- 
+Validates that BEM element classes are used together with their parent block classes.
+
+<html>
+<body>
+<!-- Provided by BEM Plugin -->
+<p>
+    Ensures that element classes (e.g., block__element) are always used with their parent block class in the same HTML element.
+</p>
+
+<h3>Rules</h3>
+<ul>
+    <li>Element class must be used with its parent block class</li>
+    <li>Both classes must be in the same HTML element</li>
+    <li>Block names must match</li>
+</ul>
+
+<h3>Examples</h3>
+<pre><code>
+<!-- Valid -->
+<span style="color: #008000">✓</span> &lt;div class="menu menu__item"&gt;
+<span style="color: #008000">✓</span> &lt;div class="form form__input form__label"&gt;
+<span style="color: #008000">✓</span> &lt;div class="header header__logo header__logo--small"&gt;
+
+<!-- Invalid -->
+<span style="color: #CC0000">✗</span> &lt;div class="menu__item"&gt;                <!-- Missing menu -->
+<span style="color: #CC0000">✗</span> &lt;div class="header menu__item"&gt;         <!-- Wrong block -->
+<span style="color: #CC0000">✗</span> &lt;div class="nav"&gt;&lt;span class="menu__item"&gt; <!-- Wrong context -->
+</code></pre>
+
+<p><em>
+    Note: This inspection helps maintain proper BEM structure and ensures that elements are always 
+    semantically connected to their blocks through class names.
+</em></p>
+
+<p><em>Provided by BEM Plugin</em></p>
+</body>
+</html> 

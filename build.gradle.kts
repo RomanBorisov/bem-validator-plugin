@@ -10,26 +10,61 @@ intellij {
 }
 
 group = "ru.bem"
-version = "1.0.0"
+version = "0.1.0"
 
 repositories {
     mavenCentral()
-}
-
-dependencies {
-    // testImplementation("org.jetbrains.kotlin:kotlin-test") // Можно добавить, если нужны тесты
 }
 
 kotlin {
     jvmToolchain(17)
 }
 
-tasks {
-    patchPluginXml {
-        sinceBuild.set("251")
-        untilBuild.set("259.*")
+sourceSets {
+    main {
+        kotlin.srcDirs("src/main/kotlin")
+        resources.srcDirs("src/main/resources")
     }
+    // Исключаем тестовые исходники
+    test {
+        kotlin.srcDirs()
+        resources.srcDirs()
+    }
+}
+
+tasks {
+    processResources {
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+        from("src/main/resources") {
+            include("inspectionDescriptions/**")
+            include("META-INF/**")
+        }
+    }
+
+    patchPluginXml {
+        version.set("0.1.0")
+        sinceBuild.set("231")
+        untilBuild.set("241.*")
+    }
+    
     named("buildSearchableOptions") {
+        enabled = false
+    }
+
+    // Отключаем задачи, связанные с тестами
+    named("test") {
+        enabled = false
+    }
+    
+    named("compileTestKotlin") {
+        enabled = false
+    }
+    
+    named("compileTestJava") {
+        enabled = false
+    }
+    
+    named("processTestResources") {
         enabled = false
     }
 } 

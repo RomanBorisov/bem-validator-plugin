@@ -10,12 +10,12 @@ class BemNamingInspection : BemBaseInspection() {
     @Nls
     override fun getDisplayName(): String = "BEM Naming"
 
+    @Nls
+    override fun getGroupDisplayName(): String = "BEM"
+
     override fun getShortName(): String = "BemNamingInspection"
 
-    override fun buildVisitor(
-        holder: ProblemsHolder,
-        isOnTheFly: Boolean
-    ): PsiElementVisitor {
+    override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return object : PsiElementVisitor() {
             override fun visitElement(element: com.intellij.psi.PsiElement) {
                 if (element is XmlTag) {
@@ -44,15 +44,6 @@ class BemNamingInspection : BemBaseInspection() {
                 holder.registerProblem(
                     classAttr,
                     "Class name '$cls' contains multiple consecutive underscores."
-                )
-                continue
-            }
-            
-            // Check for multiple consecutive hyphens
-            if (cls.contains("--") && !cls.contains("--")) {
-                holder.registerProblem(
-                    classAttr,
-                    "Class name '$cls' contains multiple consecutive hyphens."
                 )
                 continue
             }

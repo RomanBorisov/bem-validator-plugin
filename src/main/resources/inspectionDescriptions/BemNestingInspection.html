@@ -1,0 +1,30 @@
+Validates that BEM elements are not nested too deeply.
+
+<html>
+<body>
+<p>
+    Ensures that BEM elements don't use multiple levels of nesting in their class names, which can lead to maintainability issues.
+</p>
+
+<h3>Rules</h3>
+<ul>
+    <li>Only one level of element nesting is allowed</li>
+    <li>No chaining of elements with double underscores</li>
+</ul>
+
+<h3>Examples</h3>
+<pre><code>
+<!-- Valid -->
+<span style="color: #008000">✓</span> &lt;div class="block"&gt;
+<span style="color: #008000">✓</span> &lt;div class="block__element"&gt;
+<span style="color: #008000">✓</span> &lt;div class="block__element--modifier"&gt;
+
+<!-- Invalid -->
+<span style="color: #CC0000">✗</span> &lt;div class="block__element__subelement"&gt;
+<span style="color: #CC0000">✗</span> &lt;div class="block__element__subelement--modifier"&gt;
+<span style="color: #CC0000">✗</span> &lt;div class="block__element__subelement__deepnested"&gt;
+</code></pre>
+
+<p><em>Provided by BEM Plugin</em></p>
+</body>
+</html> 

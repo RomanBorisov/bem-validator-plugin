@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <idea-plugin>
     <id>com.roman.bem.plugin</id>
-    <name>BEM Plugin</name>
+    <name>BEM Inspector</name>
     <version>0.1.0</version>
     <vendor email="borisovroman2016@gmail.com" url="https://github.com/RomanBorisov/bem-validator-plugin">Roman Borisov</vendor>
+    
+    <idea-version since-build="231" until-build="241.*"/>
+    
     <description><![CDATA[
-        BEM (Block Element Modifier) methodology inspection plugin for HTML files.
+        BEM (Block Element Modifier) methodology inspector for HTML files.
         <br>
         <br>
         This plugin provides inspections for BEM methodology:

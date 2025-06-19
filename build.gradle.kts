@@ -10,7 +10,7 @@ intellij {
 }
 
 group = "ru.bem"
-version = "0.1.0"
+version = "0.1.1"
 
 repositories {
     mavenCentral()
@@ -42,9 +42,9 @@ tasks {
     }
 
     patchPluginXml {
-        version.set("0.1.0")
+        version.set("0.1.1")
         sinceBuild.set("231")
-        untilBuild.set("241.*")
+        untilBuild.set("251.*")
     }
     
     signPlugin {

@@ -23,4 +23,14 @@ Thumbs.db
 
 # Others
 *.swp
-*.swo 
+*.swo
+
+# Security - Never commit these!
+.env
+*.pem
+*.crt
+*.key
+certificate/
+private_encrypted.pem
+private.pem
+chain.crt 

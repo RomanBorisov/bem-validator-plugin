@@ -25,7 +25,7 @@ sourceSets {
         kotlin.srcDirs("src/main/kotlin")
         resources.srcDirs("src/main/resources")
     }
-    // Исключаем тестовые исходники
+    // Exclude test sources
     test {
         kotlin.srcDirs()
         resources.srcDirs()
@@ -47,11 +47,22 @@ tasks {
         untilBuild.set("241.*")
     }
     
+    signPlugin {
+        certificateChainFile.set(file("chain.crt"))
+        privateKeyFile.set(file("private.pem"))
+        password.set(providers.environmentVariable("PRIVATE_KEY_PASSWORD"))
+    }
+    
+    publishPlugin {
+        token.set(providers.environmentVariable("PUBLISH_TOKEN"))
+        channels.set(listOf("default"))
+    }
+    
     named("buildSearchableOptions") {
         enabled = false
     }
 
-    // Отключаем задачи, связанные с тестами
+    // Disable test-related tasks
     named("test") {
         enabled = false
     }
